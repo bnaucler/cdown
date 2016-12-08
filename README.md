@@ -9,7 +9,7 @@ Luke Sampson
 
 ## Usage
 `go build cdown.go`  
-`./cdown \[num]\`  
+`./cdown [num]`  
 Where \[num\] is number of minutes to count down. Currently the application can only be run from the directory containing the file univers.flf
 
 ## License
