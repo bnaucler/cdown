@@ -14,14 +14,14 @@ Luke Sampson
 Currently the executable only operates on font files in the direcory from which it was executed, defaulting to univers.flf.
 
 Output of `cdown -h[elp]`:  
-	  -f string
-			font to use (default "univers")
-	  -m int
-			minutes to count down
-	  -msg string
-			message to display when done (default "Time up!")
-	  -s int
-			seconds to count down
+      -f string
+            font to use (default "univers")
+      -m int
+            minutes to count down
+      -msg string
+            message to display when done (default "Time up!")
+      -s int
+            seconds to count down
 
 ## License
 MIT (do whatever you want)
