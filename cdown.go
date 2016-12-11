@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"flag"
 	"os"
 	"os/signal"
 	"strings"
@@ -26,15 +27,18 @@ func resterm() {
 
 func main() {
 
-	if len(os.Args) != 2 {
-		usage()
-		return
-	}
-	min, err := strconv.Atoi(os.Args[1])
-	if min <= 0 || err != nil {
-		usage()
-		return
-	}
+	mptr := flag.Int("m", 0, "minutes to count down")
+	sptr := flag.Int("s", 0, "seconds to count down")
+	fptr := flag.String("f", "univers", "font to use")
+	msgptr := flag.String("msg", "Time up!",
+		"message to display when done")
+	flag.Parse()
+
+	min := *mptr
+	sec := *sptr
+	font := *fptr
+
+	if min == 0 && sec == 0 { min = 5 }
 
 	// Get term size for placement
 	cmd := exec.Command("stty", "size")
@@ -47,10 +51,6 @@ func main() {
 	cherr(err)
 	mid := trow / 2 - 5
 
-	sec := 0
-	tot := min * 60 + sec
-
-	font := "univers"
 	cwd, err := os.Getwd()
 	cherr(err)
 
@@ -99,7 +99,7 @@ func main() {
 	cmd = exec.Command("clear")
 	cmd.Stdout = os.Stdout
 	cmd.Run()
-	figletlib.PrintMsg("Time up!", f, twid, f.Settings(), "center")
+	figletlib.PrintMsg(*msgptr, f, twid, f.Settings(), "center")
 	resterm()
 
 }

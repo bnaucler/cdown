@@ -9,8 +9,19 @@ Luke Sampson
 
 ## Usage
 `go build cdown.go`  
-`./cdown [num]`  
-Where \[num\] is number of minutes to count down. Currently the application can only be run from the directory containing the file univers.flf
+`./cdown [args]`  
+
+Currently the executable only operates on font files in the direcory from which it was executed, defaulting to univers.flf.
+
+Output of `cdown -h[elp]`:  
+	  -f string
+			font to use (default "univers")
+	  -m int
+			minutes to count down
+	  -msg string
+			message to display when done (default "Time up!")
+	  -s int
+			seconds to count down
 
 ## License
 MIT (do whatever you want)
