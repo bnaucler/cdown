@@ -39,6 +39,7 @@ func main() {
 	font := *fptr
 
 	if min == 0 && sec == 0 { min = 5 }
+	tot := min * 60 + sec	
 
 	// Get term size for placement
 	cmd := exec.Command("stty", "size")
