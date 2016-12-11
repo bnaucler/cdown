@@ -16,10 +16,6 @@ func cherr(e error) {
 	if e != nil { panic(e) }
 }
 
-func usage() {
-	fmt.Printf("Usage: %s [num]\n", os.Args[0])
-}
-
 func resterm() {
 	fmt.Print("\033[?25h")
 	fmt.Print("\033[0m\n")
@@ -39,7 +35,7 @@ func main() {
 	font := *fptr
 
 	if min == 0 && sec == 0 { min = 5 }
-	tot := min * 60 + sec	
+	tot := min * 60 + sec
 
 	// Get term size for placement
 	cmd := exec.Command("stty", "size")
@@ -72,7 +68,7 @@ func main() {
 	// Invisible cursor
 	fmt.Print("\033[?25l")
 
-	for tot > -1 {
+	for tot > 0 {
 		cmd = exec.Command("clear")
 		cmd.Stdout = os.Stdout
 		cmd.Run()
