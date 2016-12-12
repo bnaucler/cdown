@@ -30,12 +30,8 @@ func main() {
 		"message to display when done")
 	flag.Parse()
 
-	min := *mptr
-	sec := *sptr
-	font := *fptr
-
-	if min == 0 && sec == 0 { min = 5 }
-	tot := min * 60 + sec
+	if *mptr == 0 && *sptr == 0 { *mptr = 5 }
+	tot := *mptr * 60 + *sptr
 
 	// Get term size for placement
 	cmd := exec.Command("stty", "size")
@@ -51,7 +47,7 @@ func main() {
 	cwd, err := os.Getwd()
 	cherr(err)
 
-	f, err := figletlib.GetFontByName(cwd, font)
+	f, err := figletlib.GetFontByName(cwd, *fptr)
 	cherr(err)
 
 	// Clean up at interrupt
@@ -75,21 +71,22 @@ func main() {
 		for a := 0; a < mid; a++ {
 			fmt.Println()
 		}
-		pstr := fmt.Sprintf("%02d:%02d", min, sec)
-		figletlib.PrintMsg(pstr, f, twid, f.Settings(), "center")
-		time.Sleep(1 * time.Second)
 
 		// Red text last minute
-		if min == 1 && sec == 0 {
+		if *mptr == 1 && *sptr == 0 {
 			fmt.Printf("\033[31m")
 		}
 
-		sec--
-		if sec < 0 {
-			sec = 59
-			min--
+		pstr := fmt.Sprintf("%02d:%02d", *mptr, *sptr)
+		figletlib.PrintMsg(pstr, f, twid, f.Settings(), "center")
+		time.Sleep(1 * time.Second)
+
+		*sptr--
+		tot--
+		if *sptr < 0 {
+			*sptr = 59
+			*mptr--
 		}
-		tot = min * 60 + sec
 	}
 
 	// Time up!
