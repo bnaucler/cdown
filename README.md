@@ -8,8 +8,8 @@ Björn Westerberg Nauclér (mail@bnaucler.se) 2016
 Luke Sampson
 
 ## Usage
-`mkdir $HOME/.fonts`
-`cp univers.flf $HOME/.fonts`
+`mkdir $HOME/.fonts`  
+`cp univers.flf $HOME/.fonts`  
 `go install`  
 `cdown [args]`  
 
