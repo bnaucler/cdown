@@ -4,11 +4,13 @@ import (
 	"fmt"
 	"flag"
 	"os"
+	"os/user"
+	"os/exec"
 	"os/signal"
 	"strings"
 	"strconv"
-	"os/exec"
 	"time"
+	"path/filepath"
 	"github.com/lukesampson/figlet/figletlib"
 )
 
@@ -19,6 +21,12 @@ func cherr(e error) {
 func resterm() {
 	fmt.Print("\033[?25h")
 	fmt.Print("\033[0m\n")
+}
+
+func chred(tot int) {
+	if tot < 60{
+		fmt.Printf("\033[31m")
+	}
 }
 
 func main() {
@@ -44,10 +52,12 @@ func main() {
 	cherr(err)
 	mid := trow / 2 - 5
 
-	cwd, err := os.Getwd()
+	// Put univers.flf in $HOME/.fonts
+	usr, err := user.Current()
 	cherr(err)
+	fdir := filepath.Join(usr.HomeDir, ".fonts")
 
-	f, err := figletlib.GetFontByName(cwd, *fptr)
+	f, err := figletlib.GetFontByName(fdir, *fptr)
 	cherr(err)
 
 	// Clean up at interrupt
@@ -64,6 +74,9 @@ func main() {
 	// Invisible cursor
 	fmt.Print("\033[?25l")
 
+	// Check for red at start
+	chred(tot)
+
 	for tot > 0 {
 		cmd = exec.Command("clear")
 		cmd.Stdout = os.Stdout
@@ -73,9 +86,7 @@ func main() {
 		}
 
 		// Red text last minute
-		if *mptr == 1 && *sptr == 0 {
-			fmt.Printf("\033[31m")
-		}
+		chred(tot)
 
 		pstr := fmt.Sprintf("%02d:%02d", *mptr, *sptr)
 		figletlib.PrintMsg(pstr, f, twid, f.Settings(), "center")
@@ -95,5 +106,4 @@ func main() {
 	cmd.Run()
 	figletlib.PrintMsg(*msgptr, f, twid, f.Settings(), "center")
 	resterm()
-
 }

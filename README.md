@@ -8,10 +8,10 @@ Björn Westerberg Nauclér (mail@bnaucler.se) 2016
 Luke Sampson
 
 ## Usage
-`go build cdown.go`  
-`./cdown [args]`  
-
-Currently the executable only operates on font files in the direcory from which it was executed, defaulting to univers.flf.
+`mkdir $HOME/.fonts`
+`cp univers.flf $HOME/.fonts`
+`go install`  
+`cdown [args]`  
 
 Output of `cdown -h[elp]`:  
 ```
@@ -24,6 +24,8 @@ Output of `cdown -h[elp]`:
 -s int
       seconds to count down
 ```
+
+`CTRL + C` to abort.
 
 ## License
 MIT (do whatever you want)
